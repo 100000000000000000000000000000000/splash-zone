@@ -1,6 +1,7 @@
 local CoreGui = game:GetService("StarterGui")
 CoreGui:SetCore("SendNotification", {
-    Title = "Script Made By 0jwa ",
-    Text = " NOT anyone else  tired of people stealing ",
+    Title = "0j the goat!",
+    Text = "I’m too goated",
+    Icon = "rbxassetid://18140041493",
     Duration = 2.5,
 })
