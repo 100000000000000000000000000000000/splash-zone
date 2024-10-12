@@ -1,0 +1,5 @@
+local args = {
+    [1] = "18280817161"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("AccessoryAddFunction"):InvokeServer(unpack(args))
