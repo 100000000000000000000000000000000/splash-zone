@@ -1,0 +1,6 @@
+local CoreGui = game:GetService("StarterGui")
+CoreGui:SetCore("SendNotification", {
+    Title = "Script Made By 0jwa ",
+    Text = " NOT anyone else  tired of people stealing ",
+    Duration = 2.5,
+})
