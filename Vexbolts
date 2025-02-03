@@ -1,0 +1,26 @@
+local messages = {
+    "Loading…",
+    "Checking/Testing TensaiBot & Vrilbot…",
+    "Getting Playerlist…..",
+    “Done!”
+,"Commencing Texture Log sweep"
+}
+
+local function sendMessage(message)
+    local args = {
+        [1] = message,
+        [2] = "All"
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(unpack(args))
+end
+
+local function sendMessagesInOrder()
+    for _, message in ipairs(messages) do
+        sendMessage(message)
+        wait(0.9) -- Wait for 0.1 seconds between each message
+    end
+end
+
+-- Automatically send messages when the script runs
+spawn(sendMessagesInOrder)
