@@ -1,7 +1,7 @@
 local CoreGui = game:GetService("StarterGui")
 CoreGui:SetCore("SendNotification", {
-    Title = "0j the goat!",
-    Text = "I’m too goated",
+    Title = "Tensai made this!",
+    Text = "Script made by Tensai",
     Icon = "rbxassetid://18140041493",
     Duration = 2.5,
 })
