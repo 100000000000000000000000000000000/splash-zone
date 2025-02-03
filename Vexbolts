@@ -2,8 +2,8 @@ local messages = {
     "Loading…",
     "Checking/Testing TensaiBot & Vrilbot…",
     "Getting Playerlist…..",
-    “Done!”
-,"Commencing Texture Log sweep"
+    "Done!",
+    "Commencing Texture Log Sequence"
 }
 
 local function sendMessage(message)
@@ -18,7 +18,7 @@ end
 local function sendMessagesInOrder()
     for _, message in ipairs(messages) do
         sendMessage(message)
-        wait(0.9) -- Wait for 0.1 seconds between each message
+        wait(0.9) -- Wait for 0.9 seconds between each message
     end
 end
 
