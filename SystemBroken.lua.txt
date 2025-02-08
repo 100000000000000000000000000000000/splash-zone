@@ -2809,30 +2809,85 @@ BenxTarget_Button.MouseButton1Click:Connect(function()
 	end
 end)
 
+-- Define the animation ID (replace this with your actual animation ID)
+local animationId2 = "rbxassetid://18537367238" -- Change this to your animation ID
+local animation2 = Instance.new("Animation")
+animation2.AnimationId = animationId2
+
+-- Define the power for BodyThrust
+local power = 100 -- Change this to make it more or less powerful
+
+-- Connect the MouseButton1Click event to the button
 HeadsitTarget_Button.MouseButton1Click:Connect(function()
-	if TargetedPlayer ~= nil then
-		ChangeToggleColor(HeadsitTarget_Button)
-		if HeadsitTarget_Button.Ticket_Asset.ImageColor3 == Color3.fromRGB(0,255,0) then
-			repeat
-				pcall(function()
-					if not GetRoot(plr):FindFirstChild("BreakVelocity") then
-						pcall(function()
-							local TempV = Velocity_Asset:Clone()
-							TempV.Parent = GetRoot(plr)
-						end)
-					end
-					local targethead = Players[TargetedPlayer].Character.Head
-					plr.Character.Humanoid.Sit = true
-					GetRoot(plr).CFrame = targethead.CFrame * CFrame.new(0,2,0)
-					GetRoot(plr).Velocity = Vector3.new(0,0,0)
-				end)
-				task.wait()
-			until HeadsitTarget_Button.Ticket_Asset.ImageColor3 == Color3.fromRGB(255,0,0)
-			if GetRoot(plr):FindFirstChild("BreakVelocity") then
-				GetRoot(plr).BreakVelocity:Destroy()
-			end
-		end
-	end
+    -- Check if a player has been targeted
+    if TargetedPlayer ~= nil then
+        -- Change the button's toggle color
+        ChangeToggleColor(HeadsitTarget_Button)
+        
+        -- Check if the button is in the active state (green)
+        if HeadsitTarget_Button.Ticket_Asset.ImageColor3 == Color3.fromRGB(0, 255, 0) then
+
+            -- Disable collisions for the character parts
+            game:GetService('RunService').Stepped:Connect(function()
+                local player = game.Players.LocalPlayer
+                local character = player.Character
+                
+                if character then
+                    character.Head.CanCollide = false
+                    character.UpperTorso.CanCollide = false
+                    character.LowerTorso.CanCollide = false
+                    character.HumanoidRootPart.CanCollide = false
+                end
+            end)
+
+            -- Create BodyThrust
+            wait(.1)
+            local bambam = Instance.new("BodyThrust")
+            bambam.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+            bambam.Force = Vector3.new(power, 0, power)
+            bambam.Location = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+            
+            repeat
+                pcall(function() 
+                    -- Get the target head to position the player correctly
+                    local targethead = Players[TargetedPlayer].Character.Head
+                    
+                    -- Load the animation into a new AnimationTrack
+                    local humanoid = plr.Character:WaitForChild("Humanoid")
+                    local animationTrack2 = humanoid:LoadAnimation(animation2)
+                    
+                    -- Set the playback speed of the animation
+                    animationTrack2:PlaybackSpeed = 40 -- Set animation speed to 40
+                    animationTrack2:Play() -- Play the animation
+                    
+                    -- Position the player above the target's head
+                    GetRoot(plr).CFrame = targethead.CFrame * CFrame.new(0, 2, 0)
+                    
+                    -- Spin the player while the animation plays
+                    local angle = 0 -- Initial angle
+                    local spinSpeed = 5 -- Speed of spin (adjust as necessary)
+                    
+                    while HeadsitTarget_Button.Ticket_Asset.ImageColor3 == Color3.fromRGB(0, 255, 0) do
+                        angle = angle + spinSpeed -- Increment the angle
+                        GetRoot(plr).CFrame = targethead.CFrame * CFrame.new(0, 2, 0) * CFrame.Angles(0, math.rad(angle), 0) -- Apply spinning
+                        task.wait(0.1) -- Small wait to control the spinning speed
+                    end
+                    
+                end)
+
+                -- Wait a moment before repeating the loop
+                task.wait()
+            until HeadsitTarget_Button.Ticket_Asset.ImageColor3 == Color3.fromRGB(255, 0, 0) -- Check if the button is deactivated (red)
+            
+            -- Clean up by destroying the BreakVelocity if it exists
+            if GetRoot(plr):FindFirstChild("BreakVelocity") then
+                GetRoot(plr).BreakVelocity:Destroy()
+            end
+            
+            -- Destroy BodyThrust after usage (or you can keep it)
+            bambam:Destroy()
+        end
+    end
 end)
 
 StandTarget_Button.MouseButton1Click:Connect(function()
