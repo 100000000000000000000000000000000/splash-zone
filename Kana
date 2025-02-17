@@ -1,0 +1,56 @@
+local CoreGui = game:GetService("StarterGui")
+CoreGui:SetCore("SendNotification", {
+    Title = "Tensai made this!",
+    Text = "Script made by Tensai",
+    Icon = "rbxassetid://18140041493",
+    Duration = 2.5,
+})
+
+local red = {
+    [1] = "colo",
+    [2] = Color3.new(255, 0, 0)
+}
+
+local orange = {
+    [1] = "colo",
+    [2] = Color3.new(1, 0.333333, 0)
+}
+
+local yellow = {
+    [1] = "colo",
+    [2] = Color3.new(255, 85, 0)
+}
+
+local green = {
+    [1] = "colo",
+    [2] = Color3.new(0, 0, 255)
+}
+
+
+local blue = {
+    [1] = "colo",
+    [2] = Color3.new(255, 0, 0)
+}
+
+local pink = {
+    [1] = "colo",
+    [2] = Color3.new(255, 0, 255)
+}
+
+local teal = {
+    [1] = "colo",
+    [2] = Color3.new(0.333333, 1, 1)
+}
+
+while task.wait() do
+local variables = {red, yellow, green, blue, pink, orange, teal}
+local chosenVariable = variables[math.random(1, #variables)] -- This will pick one of the 4 items in the table
+
+local function colors()
+
+game:GetService("ReplicatedStorage"):WaitForChild("307D0912-4609-4190-B07C-739143B666D3"):FireServer(unpack(chosenVariable))
+end
+
+
+spawn(colors)
+end
